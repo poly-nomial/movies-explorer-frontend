@@ -1,0 +1,9 @@
+.bar_length_short {
+    width: 20%;
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+    .bar_length_short {
+        width: 30%;
+    }
+}

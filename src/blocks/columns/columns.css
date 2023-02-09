@@ -1,0 +1,21 @@
+.columns {
+    display: flex;
+    flex-flow: row;
+    gap: 40px;
+    padding-bottom: 110px;
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    .columns {
+        gap: 30px;
+        padding-bottom: 93px;
+    }
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+    .columns {
+        padding-bottom: 60px;
+        flex-flow: column;
+        gap: 56px;
+    }
+}

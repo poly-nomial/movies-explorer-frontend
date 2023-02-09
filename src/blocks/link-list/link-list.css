@@ -1,0 +1,12 @@
+.link-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+    .link-list {
+        width: 292px;
+        margin: 0 auto;
+    }
+}

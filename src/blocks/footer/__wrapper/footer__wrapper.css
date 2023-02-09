@@ -1,0 +1,28 @@
+.footer__wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0px 70px 0px;
+    width: 1140px;
+    max-width: 90%;
+    min-height: 56px;
+    box-sizing: content-box;
+    border-top: 1px solid #E8E8E8;
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    .footer__wrapper {
+        margin: 0px 30px;
+        width: 708px;
+    }
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+    .footer__wrapper {
+        padding: 0;
+        padding-bottom: 20px;
+        width: 300px;
+        height: 137px;
+        flex-flow: column-reverse;
+    }
+}

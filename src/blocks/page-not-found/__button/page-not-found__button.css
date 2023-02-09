@@ -1,0 +1,20 @@
+.page-not-found__button {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    width: 42px;
+    height: 17px;
+    cursor: pointer;
+    margin-bottom: 60px;
+    margin-top: auto;
+    font-size: 14px;
+    line-height: calc(16.94 / 14);
+    font-weight: normal;
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+    .page-not-found__button {
+        font-size: 12px;
+        line-height: calc(14.52 / 12);
+    }
+}

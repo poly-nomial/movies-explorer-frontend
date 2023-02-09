@@ -1,0 +1,23 @@
+.page-not-found__title {
+    margin: 0;
+    margin-top: 246px;
+    margin-bottom: 5px;
+    font-weight: normal;
+    font-size: 140px;
+    line-height: calc(169.43 / 140);
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    .page-not-found__title {
+        margin-top: 408px;
+    }
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+    .page-not-found__title {
+        margin-top: 329px;
+        margin-bottom: 10px;
+        font-size: 80px;
+        line-height: calc(96.82 / 80);
+    }
+}

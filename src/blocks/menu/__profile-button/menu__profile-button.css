@@ -1,0 +1,13 @@
+.menu__profile-button {
+    align-self: center;
+    margin-bottom: 90px;
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px)  {
+    .menu__profile-button {
+        font-size: 14px;
+        line-height: calc(16 / 14);
+        width: 100px;
+        height: 32px;
+    }
+}

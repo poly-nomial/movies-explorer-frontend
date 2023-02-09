@@ -1,0 +1,12 @@
+.search-bar__label-text {
+    font-weight: normal;
+    font-size: 12px;
+    line-height: calc(18 / 12);
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+    .search-bar__label-text {
+        font-size: 11px;
+        line-height: calc(18 / 11);
+    }
+}

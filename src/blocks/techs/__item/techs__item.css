@@ -1,0 +1,29 @@
+.techs__item {
+    width: 90px;
+    height: 60px;
+    background-color: #E8E8E8;
+    border-radius: 10px;
+    text-align: center;
+    line-height: 60px;
+    font-weight: normal;
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    .techs__item {
+        width: 84px;
+        height: 57px;
+        font-size: 12px;
+        line-height: 57px;
+    }
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+    .techs__item {
+        width: 84px;
+        height: 57px;
+        line-height: 57px;
+        font-size: 12px;
+    }
+}
