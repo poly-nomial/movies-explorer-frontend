@@ -64,7 +64,7 @@
 @import url('./blocks/header/__button-wrapper/_movies/header__button-wrapper_movies.css');
 @import url('./blocks/header/_movies/header_movies.css');
 @import url('./blocks/header/__button/_profile/header__button_profile.css');
-@import url('./blocks/main/__movies/main__movies.css');
+@import url('./blocks/movies/movies.css');
 @import url('./blocks/search-bar/search-bar.css');
 @import url('./blocks/search-bar/__input/search-bar__input.css');
 @import url('./blocks/search-bar/__form/search-bar__form.css');
@@ -85,7 +85,7 @@
 @import url('./blocks/movie-card/__duration/movie-card__duration.css');
 @import url('./blocks/movies/__button/movies__button.css');
 @import url('./blocks/movie-card/__delete/movie-card__delete.css');
-@import url('./blocks/main/__movies/_long-margin/main__movies_long-margin.css');
+@import url('./blocks/movies/_long-margin/movies_long-margin.css');
 @import url('./blocks/profile/__form/profile__form.css');
 @import url('./blocks/profile/__input-line/profile__input-line.css');
 @import url('./blocks/profile/__input-text/profile__input-text.css');

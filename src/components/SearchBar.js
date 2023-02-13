@@ -7,6 +7,7 @@ function SearchBar() {
           type="text"
           id="film-search"
           placeholder="Фильм"
+          required
         />
         <button
           type="submit"

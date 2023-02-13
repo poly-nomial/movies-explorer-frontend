@@ -3,7 +3,7 @@ import MoviesCardList from "./MoviesCardList";
 
 function SavedMovies(props) {
   return (
-    <section className="main main__movies main__movies_long-margin">
+    <section className="main movies movies_long-margin">
       <SearchBar />
       <MoviesCardList
         cardList={props.cardList}
