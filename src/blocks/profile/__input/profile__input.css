@@ -1,0 +1,12 @@
+.profile__input {
+    border: none;
+    text-align: right;
+    font-weight: normal;
+    font-size: 11px;
+    line-height: calc(13.31 / 11);
+    width: 70%;
+}
+
+.profile__input:focus {
+    outline: none;
+}

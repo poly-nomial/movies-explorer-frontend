@@ -1,0 +1,25 @@
+.link-list__link {
+    display: flex;
+    text-decoration: none;
+    color: black;
+    height: 89px;
+    align-items: center;
+    font-weight: normal;
+    font-size: 30px;
+    line-height: calc( 50 / 30);
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px)  {
+    .link-list__link {
+        font-size: 28px;
+        line-height: calc(50 / 28);
+    }
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+    .link-list__link {
+        height: 57px;
+        font-size: 18px;
+        line-height: calc(29 / 18);
+    }
+}

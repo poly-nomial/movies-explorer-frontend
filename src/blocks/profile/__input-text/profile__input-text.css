@@ -1,0 +1,9 @@
+.profile__input-text {
+    margin-top: 16px;
+    margin-bottom: 16px;
+    font-weight: 500;
+    font-size: 11px;
+    line-height: calc(13.31 / 11);
+    color: black;
+}
+

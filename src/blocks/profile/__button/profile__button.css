@@ -1,0 +1,11 @@
+.profile__button {
+    background-color: transparent;
+    width: 410;
+    height: 16px;
+    border: none;
+    cursor: pointer;
+    color: black;
+    font-weight: normal;
+    font-size: 13px;
+    line-height: calc(15.73 / 13);
+}

@@ -1,1 +1,1 @@
-# movies-explorer-frontend
+- Ссылка на дизайн-макет: https://disk.yandex.ru/d/G62bIlKBrWGiYQ

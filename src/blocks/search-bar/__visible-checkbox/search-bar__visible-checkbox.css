@@ -1,0 +1,31 @@
+.search-bar__visible-checkbox {
+    display: inline-block;
+    vertical-align: middle;
+    border-radius: 20px;
+    width: 36px;
+    height: 20px;
+    background-color: grey;
+    transition: background-color 0.1s ease-in-out;
+}
+
+.search-bar__visible-checkbox::after {
+    content: '';
+    display: block;
+    background-color: white;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    margin: 2px;
+    margin-left: 2px;
+    transition: margin-left 0.1s ease-in-out;
+}
+
+.search-bar__checkbox:checked + .search-bar__visible-checkbox {
+    background-color: #2BE080;
+
+}
+
+.search-bar__checkbox:checked + .search-bar__visible-checkbox::after {
+    margin-left: 18px;
+
+}

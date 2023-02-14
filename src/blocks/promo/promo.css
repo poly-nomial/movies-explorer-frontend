@@ -1,0 +1,28 @@
+.promo {
+    background-color: #F3C1F8;
+    width: 100%;
+    padding-top: 50px;
+    padding-bottom: 60px;
+    display: flex;
+    flex-flow: column;
+    gap: 102px;
+    overflow: hidden;
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    .promo {
+        padding-top: 300px;
+        padding-bottom: 70px;
+        gap: 140px;
+        align-items: center;
+    }
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+    .promo {
+        padding-top: 183px;
+        padding-bottom: 40px;
+        gap: 60px;
+        align-items: center;
+    }
+}

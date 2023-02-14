@@ -1,0 +1,8 @@
+.menu__nav-links-wrapper {
+    display: flex;
+    flex-flow: column;
+    margin: 0 auto;
+    align-items: center;
+    gap: 28px;
+    margin-top: 159px;
+}
