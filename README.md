@@ -1,2 +1,3 @@
 - Ссылка на дизайн-макет: https://disk.yandex.ru/d/G62bIlKBrWGiYQ
 - Адрес сайта: https://polybitfilms.nomoredomains.rocks
+- Пулл-реквест: https://github.com/poly-nomial/movies-explorer-frontend/pull/2
