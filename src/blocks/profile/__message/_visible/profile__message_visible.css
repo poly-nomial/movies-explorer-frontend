@@ -1,4 +1,4 @@
-.menu_visible {
+.profile__message_visible {
     visibility: visible;
     opacity: 1;
     transition: visibility 0s 0s, opacity 0.2s 0s linear;

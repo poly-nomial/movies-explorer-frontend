@@ -50,6 +50,7 @@
 @import url('./blocks/link-list/__link/link-list__link.css');
 @import url('./blocks/link-list/__image/link-list__image.css');
 @import url('./blocks/sign-up/sign-up.css');
+@import url('./blocks/sign-up/__form/sign-up__form.css');
 @import url('./blocks/sign-up/__title/sign-up__title.css');
 @import url('./blocks/sign-up/__input/sign-up__input.css');
 @import url('./blocks/sign-up/__input-name/sign-up__input-name.css');
@@ -57,6 +58,7 @@
 @import url('./blocks/sign-up/__text-line/sign-up__text-line.css');
 @import url('./blocks/sign-up/__link/sign-up__link.css');
 @import url('./blocks/sign-in/__button/sign-in__button.css');
+@import url('./blocks/sign-up/__error-text/sign-up__error-text.css');
 @import url('./blocks/page-not-found/page-not-found.css');
 @import url('./blocks/page-not-found/__title/page-not-found__title.css');
 @import url('./blocks/page-not-found/__text/page-not-found__text.css');
@@ -77,11 +79,13 @@
 @import url('./blocks/profile/__greeting/profile__greeting.css');
 @import url('./blocks/movies/movies.css');
 @import url('./blocks/movies-card-list/movies-card-list.css');
+@import url('./blocks/movies-card-list/__not-found-text/movies-card-list__not-found-text.css');
 @import url('./blocks/movie-card/movie-card.css');
 @import url('./blocks/movie-card/__thumbnail/movie-card__thumbnail.css');
 @import url('./blocks/movie-card/__description/movie-card__description.css');
 @import url('./blocks/movie-card/__name/movie-card__name.css');
 @import url('./blocks/movie-card/__like/movie-card__like.css');
+@import url('./blocks/movie-card/__like/_active/movie-card__like_active.css');
 @import url('./blocks/movie-card/__duration/movie-card__duration.css');
 @import url('./blocks/movies/__button/movies__button.css');
 @import url('./blocks/movie-card/__delete/movie-card__delete.css');
@@ -92,6 +96,8 @@
 @import url('./blocks/profile/__input/profile__input.css');
 @import url('./blocks/profile/__button/profile__button.css');
 @import url('./blocks/profile/__button/_exit/profile__button_exit.css');
+@import url('./blocks/profile/__message/profile__message.css');
+@import url('./blocks/profile/__message/_visible/profile__message_visible.css');
 @import url('./blocks/header/__button/_hide-on-small-screen/header__button_hide-on-small-screen.css');
 @import url('./blocks/header/__burger/header__burger.css');
 @import url('./blocks/menu/menu.css');
@@ -103,3 +109,6 @@
 @import url('./blocks/menu/__nav-link/_active/menu__nav-link_active.css');
 @import url('./blocks/menu/__profile-button/menu__profile-button.css');
 @import url('./blocks/menu/_visible/menu_visible.css');
+@import url('./blocks/preloader/preloader.css');
+@import url('./blocks/movies/__button/_hidden/movies__button_hidden.css');
+@import url('./blocks/movie-card/__trailer-link/movie-card__trailer-link.css');

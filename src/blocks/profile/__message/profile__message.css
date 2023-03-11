@@ -1,0 +1,11 @@
+.profile__message {
+    font-weight: normal;
+    font-size: 13px;
+    line-height: calc(15.73 / 13);
+    position: relative;
+    bottom: 50px;
+    visibility: hidden;
+    color: #2BE080;
+    opacity: 0;
+    transition: visibility 0s 0.2s, opacity 0.2s 0s linear;
+}

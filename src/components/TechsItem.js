@@ -1,5 +1,5 @@
 function TechsItem(props) {
-  return <dev className="techs__item">{props.name}</dev>;
+  return <div className="techs__item">{props.name}</div>;
 }
 
 export default TechsItem;

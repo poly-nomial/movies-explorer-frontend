@@ -1,0 +1,8 @@
+.sign-up__error-text {
+    font-size: 10px;
+    line-height: calc(12.1 / 10);
+    font-weight: normal;
+    color: #FF4062;
+    height: 12px;
+    margin-bottom: 12px;
+}
