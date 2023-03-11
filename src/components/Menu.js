@@ -1,11 +1,11 @@
 import { NavLink, Link } from "react-router-dom";
 
-function Menu() {
+function Menu({ isOpen, handleClose }) {
   return (
-    <nav className="menu">
+    <nav className={`menu ${isOpen ? "menu_visible" : ""}`}>
       <div className="menu__background"></div>
       <div className="menu__foreground">
-        <button className="menu__close-button" />
+        <button className="menu__close-button" onClick={handleClose} />
         <div className="menu__nav-links-wrapper">
           <NavLink
             to="/"

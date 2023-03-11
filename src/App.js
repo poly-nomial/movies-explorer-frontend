@@ -1,5 +1,7 @@
 import "./App.css";
+import React from "react";
 import { Routes, Route } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Header from "./components/Header.js";
 import Footer from "./components/Footer.js";
 import Main from "./components/Main.js";
@@ -10,65 +12,281 @@ import SavedMovies from "./components/SavedMovies";
 import Profile from "./components/Profile";
 import Menu from "./components/Menu";
 import PageNotFound from "./components/PageNotFound";
-import wordsDesignThumbnail from "./images/cardsThumbnails/33 слова о дизайне.png";
-import yearsDesignThumbnail from "./images/cardsThumbnails/100 лет дизайна.png";
-import banksiThumbnail from "./images/cardsThumbnails/В погоне за Бенкси.png";
-import baskiaThumbnail from "./images/cardsThumbnails/Баския.png";
-
-const cardList = [
-  {
-    thumbnail: wordsDesignThumbnail,
-    nameRU: "33 слова о дизайне",
-    duration: 107,
-  },
-  {
-    thumbnail: yearsDesignThumbnail,
-    nameRU: `Киноальманах "100 лет дизайна"`,
-    duration: 63,
-  },
-  {
-    thumbnail: banksiThumbnail,
-    nameRU: "В погоне за Бенкси",
-    duration: 102,
-  },
-  {
-    thumbnail: baskiaThumbnail,
-    nameRU: "Баския: взрыв реальности",
-    duration: 81,
-  },
-];
-const cardListSaved = [
-  {
-    thumbnail: yearsDesignThumbnail,
-    nameRU: `Киноальманах "100 лет дизайна"`,
-    duration: 63,
-  },
-  {
-    thumbnail: banksiThumbnail,
-    nameRU: "В погоне за Бенкси",
-    duration: 102,
-  },
-];
+import * as Auth from "./utils/Auth";
+import api from "./utils/Api";
+import ProtectedRoute from "./components/ProtectedRoute";
+import movieApi from "./utils/MovieApi";
+import { CurrentUserContext } from "./contexts/CurrentUserContext";
+import useLocalStorage from "./hooks/useLocalStorage";
 
 function App() {
+  const navigate = useNavigate();
+
+  const [isNavMenuOpen, setIsNavMenuOpen] = React.useState(false);
+  const [currentUser, setCurrentUser] = React.useState({});
+  const [loggedIn, setLoggedIn] = React.useState(false);
+  const [savedMoviesList, setSavedMoviesList] = React.useState([]);
+  const [filteredMovieList, setFilteredMovieList] = useLocalStorage(
+    "searchedMovies",
+    null
+  );
+  const [initialSize, setInitialSize] = React.useState(12);
+  const [addedSize, setAddedSize] = React.useState(3);
+  const [isLoadingFilms, setIsLoadingFilms] = React.useState(false);
+  const [searchQuery, setSearchQuery] = useLocalStorage(
+    "moviesSearchQuery",
+    ""
+  );
+  const [savedMoviesSearchQuery, setSavedMoviesSearchQuery] =
+    React.useState("");
+  const [moviesShortFilmSwitch, setMoviesShortFilmSwitch] = useLocalStorage(
+    "moviesSwitchState",
+    false
+  );
+  const [savedMoviesShortFilmSwitch, setSavedMoviesShortFilmSwitch] =
+    React.useState(false);
+  const [searchedMoviesCount, setSearchedMoviesCount] = React.useState(0);
+  const [windowWidth, setWindowWidth] = React.useState(window.innerWidth);
+  const [profileMessageVisible, setProfileMessageVisible] =
+    React.useState(false);
+
+  function tokenCheck() {
+    return Auth.authorize()
+      .then((res) => {
+        if (res) {
+          setCurrentUser(res);
+          setLoggedIn(true);
+          api.getSavedMovies().then((res) => {
+            setSavedMoviesList(res);
+            navigate("/movies");
+          });
+        } else {
+          navigate("/sign-in");
+        }
+      })
+      .catch((err) => console.log(err));
+  }
+
+  React.useEffect(() => {
+    tokenCheck();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loggedIn]);
+
+  React.useEffect(() => {
+    const handleWindowResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleWindowResize);
+
+    return () => {
+      window.removeEventListener("resize", handleWindowResize);
+    };
+  });
+
+  React.useEffect(() => {
+    if (windowWidth >= 768 && windowWidth < 1024) {
+      setInitialSize(8);
+      setAddedSize(2);
+    } else if (windowWidth >= 320 && windowWidth < 768) {
+      setInitialSize(5);
+      setAddedSize(1);
+    } else if (windowWidth >= 1024 && initialSize !== 12) {
+      setInitialSize(12);
+      setAddedSize(3);
+    }
+  }, [windowWidth, initialSize]);
+
+  function handleBurgerIconClick() {
+    setIsNavMenuOpen(true);
+  }
+
+  function closeNavMenu() {
+    setIsNavMenuOpen(false);
+  }
+
+  function toggleMoviesSwitchState() {
+    setMoviesShortFilmSwitch(!moviesShortFilmSwitch);
+  }
+
+  function toggleSavedMoviesSwitchState() {
+    setSavedMoviesShortFilmSwitch(!savedMoviesShortFilmSwitch);
+  }
+
+  function handleRegisterSubmit(name, email, password) {
+    Auth.register(name, email, password)
+      .then(() => {
+        setCurrentUser({ name, email, password });
+        Auth.login(email, password).then(() => navigate("/movies"));
+      })
+      .catch((err) => {
+        console.log(err);
+        /*здесь будет передача ошибки в компонент Register*/
+      });
+  }
+
+  function handleLoginSubmit(email, password) {
+    Auth.login(email, password)
+      .then(() => {
+        api.getUser().then((res) => {
+          setCurrentUser(res);
+          setLoggedIn(true);
+          navigate("/movies");
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        /* здесь будет передача ошибки в компонент Login */
+      });
+  }
+
+  function handleProfileSubmit(email, name) {
+    api
+      .updateProfile(email, name)
+      .then((res) => {
+        setCurrentUser(res);
+        setProfileMessageVisible(true);
+      })
+      .catch((err) => {
+        console.log(err);
+        /* здесь будет передача ошибки в компонент Profile */
+      });
+  }
+
+  function hideProfileMessage() {
+    setProfileMessageVisible(false);
+  }
+
+  function handleSearch() {
+    setIsLoadingFilms(true);
+    setMoviesShortFilmSwitch(moviesShortFilmSwitch);
+    movieApi
+      .getMovies(searchQuery, 0, initialSize, moviesShortFilmSwitch)
+      .then((res) => {
+        setFilteredMovieList(res.items);
+        setSearchedMoviesCount(res.total);
+        setIsLoadingFilms(false);
+      });
+  }
+
+  React.useEffect(() => {
+    if (searchQuery) {
+      handleSearch();
+    }
+  }, [moviesShortFilmSwitch]);
+
+  function handleAddMoreMovies() {
+    movieApi
+      .getMovies(
+        searchQuery,
+        filteredMovieList.length,
+        addedSize,
+        moviesShortFilmSwitch
+      )
+      .then((res) => {
+        setFilteredMovieList(filteredMovieList.concat(res.items));
+        setSearchedMoviesCount(res.total);
+      });
+  }
+
+  function handleSaveMovie(movie) {
+    api.saveMovie(movie).then(() => {
+      api.getSavedMovies().then((res) => setSavedMoviesList(res));
+    });
+  }
+
+  function handleDeleteSavedMovie(movie) {
+    api.deleteSavedMovie(movie).then(() => {
+      api.getSavedMovies().then((res) => setSavedMoviesList(res));
+    });
+  }
+
+  function handleLogout() {
+    Auth.logout().then(() => {
+      setCurrentUser({});
+      setFilteredMovieList(null);
+      setLoggedIn(false);
+      setSearchQuery("");
+      setSavedMoviesList([]);
+      setMoviesShortFilmSwitch(false);
+      navigate("/");
+    });
+  }
+
   return (
-    <div className="page">
-      <Header />
-      <Routes>
-        <Route path="sign-in" element={<Login />} />
-        <Route path="sign-up" element={<Register />} />
-        <Route path="/" element={<Main />} />
-        <Route path="/movies" element={<Movies cardList={cardList} />} />
-        <Route
-          path="/saved-movies"
-          element={<SavedMovies cardList={cardListSaved} />}
+    <CurrentUserContext.Provider value={currentUser}>
+      <div className="page">
+        <Header
+          handleBurgerIconClick={handleBurgerIconClick}
+          loggedIn={loggedIn}
         />
-        <Route path="/profile" element={<Profile name="Лина" />} />
-        <Route path="*" element={<PageNotFound />} />
-      </Routes>
-      <Menu />
-      <Footer />
-    </div>
+        <Routes>
+          <Route
+            path="sign-in"
+            element={<Login onSubmit={handleLoginSubmit} />}
+          />
+          <Route
+            path="sign-up"
+            element={<Register onSubmit={handleRegisterSubmit} />}
+          />
+          <Route path="/" element={<Main />} />
+          <Route
+            path="/movies"
+            element={
+              <ProtectedRoute
+                element={Movies}
+                cardList={filteredMovieList}
+                loggedIn={loggedIn}
+                onSearchSubmit={handleSearch}
+                isLoading={isLoadingFilms}
+                handleAddMoreMovies={handleAddMoreMovies}
+                isMoreButtonHidden={
+                  (filteredMovieList?.length ?? 0) === searchedMoviesCount
+                }
+                switchState={moviesShortFilmSwitch}
+                toggleSwitchState={toggleMoviesSwitchState}
+                saveMovie={handleSaveMovie}
+                savedMoviesList={savedMoviesList}
+                deleteSavedMovie={handleDeleteSavedMovie}
+                searchQuery={searchQuery}
+                onSearchQueryChange={setSearchQuery}
+              />
+            }
+          />
+          <Route
+            path="/saved-movies"
+            element={
+              <ProtectedRoute
+                element={SavedMovies}
+                cardList={savedMoviesList}
+                loggedIn={loggedIn}
+                deleteSavedMovie={handleDeleteSavedMovie}
+                switchState={savedMoviesShortFilmSwitch}
+                toggleSwitchState={toggleSavedMoviesSwitchState}
+                onSearchQueryChange={setSavedMoviesSearchQuery}
+                searchQuery={savedMoviesSearchQuery}
+              />
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute
+                element={Profile}
+                onSubmit={handleProfileSubmit}
+                loggedIn={loggedIn}
+                onLogout={handleLogout}
+                messageVisible={profileMessageVisible}
+                hideMessage={hideProfileMessage}
+              />
+            }
+          />
+          <Route path="*" element={<PageNotFound />} />
+        </Routes>
+        <Menu isOpen={isNavMenuOpen} handleClose={closeNavMenu} />
+        <Footer />
+      </div>
+    </CurrentUserContext.Provider>
   );
 }
 

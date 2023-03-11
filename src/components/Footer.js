@@ -38,6 +38,7 @@ function Footer(props) {
           }
         />
       ))}
+      <Route path="*" element={null} />
     </Routes>
   );
 }
