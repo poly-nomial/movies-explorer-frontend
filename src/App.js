@@ -1,7 +1,7 @@
 import "./App.css";
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Header from "./components/Header.js";
 import Footer from "./components/Footer.js";
 import Main from "./components/Main.js";
@@ -21,10 +21,11 @@ import useLocalStorage from "./hooks/useLocalStorage";
 
 function App() {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [isNavMenuOpen, setIsNavMenuOpen] = React.useState(false);
   const [currentUser, setCurrentUser] = React.useState({});
-  const [loggedIn, setLoggedIn] = React.useState(false);
+  const [loggedIn, setLoggedIn] = React.useState(null);
   const [savedMoviesList, setSavedMoviesList] = React.useState([]);
   const [filteredMovieList, setFilteredMovieList] = useLocalStorage(
     "searchedMovies",
@@ -58,13 +59,17 @@ function App() {
           setLoggedIn(true);
           api.getSavedMovies().then((res) => {
             setSavedMoviesList(res);
-            navigate("/movies");
+            //navigate("/movies");
           });
         } else {
+          setLoggedIn(false);
           navigate("/sign-in");
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setLoggedIn(false);
+        navigate("/");
+      });
   }
 
   React.useEffect(() => {
@@ -116,12 +121,10 @@ function App() {
   function handleRegisterSubmit(name, email, password) {
     Auth.register(name, email, password)
       .then(() => {
-        setCurrentUser({ name, email, password });
-        Auth.login(email, password).then(() => navigate("/movies"));
+        handleLoginSubmit(email, password);
       })
       .catch((err) => {
         console.log(err);
-        /*здесь будет передача ошибки в компонент Register*/
       });
   }
 
@@ -131,12 +134,16 @@ function App() {
         api.getUser().then((res) => {
           setCurrentUser(res);
           setLoggedIn(true);
-          navigate("/movies");
+          if (
+            location.pathname === "/sign-in" ||
+            location.pathname === "/sign-up"
+          ) {
+            navigate("/movies");
+          }
         });
       })
       .catch((err) => {
         console.log(err);
-        /* здесь будет передача ошибки в компонент Login */
       });
   }
 
@@ -149,7 +156,6 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
-        /* здесь будет передача ошибки в компонент Profile */
       });
   }
 
@@ -201,14 +207,26 @@ function App() {
     });
   }
 
+  function resetStates() {
+    setIsNavMenuOpen(false);
+    setCurrentUser({});
+    setLoggedIn(false);
+    setSavedMoviesList([]);
+    setFilteredMovieList(null);
+    setInitialSize(12);
+    setAddedSize(3);
+    setIsLoadingFilms(false);
+    setSearchQuery("");
+    setSavedMoviesSearchQuery("");
+    setMoviesShortFilmSwitch(false);
+    setSavedMoviesShortFilmSwitch(false);
+    setSearchedMoviesCount(0);
+    setProfileMessageVisible(false);
+  }
+
   function handleLogout() {
     Auth.logout().then(() => {
-      setCurrentUser({});
-      setFilteredMovieList(null);
-      setLoggedIn(false);
-      setSearchQuery("");
-      setSavedMoviesList([]);
-      setMoviesShortFilmSwitch(false);
+      resetStates();
       navigate("/");
     });
   }
@@ -223,11 +241,13 @@ function App() {
         <Routes>
           <Route
             path="sign-in"
-            element={<Login onSubmit={handleLoginSubmit} />}
+            element={<Login onSubmit={handleLoginSubmit} loggedIn={loggedIn} />}
           />
           <Route
             path="sign-up"
-            element={<Register onSubmit={handleRegisterSubmit} />}
+            element={
+              <Register onSubmit={handleRegisterSubmit} loggedIn={loggedIn} />
+            }
           />
           <Route path="/" element={<Main />} />
           <Route

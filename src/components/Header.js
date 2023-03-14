@@ -5,7 +5,13 @@ import logo from "../images/logo.svg";
 function Header({ handleBurgerIconClick, loggedIn }) {
   const location = useLocation();
   const backgroundColor = location.pathname === "/" ? "#F3C1F8" : "#FFFFFF";
-  if (loggedIn) {
+  if (
+    loggedIn &&
+    (location.pathname === "/" ||
+      location.pathname === "/movies" ||
+      location.pathname === "/saved-movies" ||
+      location.pathname === "/profile")
+  ) {
     return (
       <header
         className="header header_movies"

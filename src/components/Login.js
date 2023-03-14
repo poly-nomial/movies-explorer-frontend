@@ -1,8 +1,8 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import logo from "../images/logo.svg";
 
-function Login({ onSubmit }) {
+function Login({ onSubmit, loggedIn }) {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const emailIsValid = React.useMemo(() => /\S+@\S+\.\S+/.test(email), [email]);
@@ -21,7 +21,9 @@ function Login({ onSubmit }) {
     onSubmit(email, password);
   }
 
-  return (
+  return loggedIn ? (
+    <Navigate to="/" replace />
+  ) : (
     <div className="sign-up">
       <Link to="/">
         <img className="sign-up__logo hover-opacity" src={logo} alt="Логотип" />

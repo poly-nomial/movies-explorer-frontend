@@ -18,6 +18,12 @@ function MoviesCard({
   function onButtonClick() {
     if (buttonClass === "movie-card__like" && !isSaved) {
       saveCurrentMovie();
+    } else if (buttonClass === "movie-card__like" && isSaved) {
+      const [savedMovie] = savedMoviesList.filter(
+        (movieFromList) => movieFromList.movieId === movie.id
+      );
+      deleteMovie(savedMovie);
+      isSaved = false;
     } else if (buttonClass === "movie-card__delete" || isSaved) {
       deleteMovie(movie);
       isSaved = false;

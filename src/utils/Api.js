@@ -33,9 +33,7 @@ export class Api {
       method: "POST",
       headers: this._headers,
       body: JSON.stringify(movie),
-    })
-      .then((res) => this._getResponseData(res))
-      .then(() => console.log("Фильм сохранен"));
+    }).then((res) => this._getResponseData(res));
   }
 
   getSavedMovies() {
@@ -53,9 +51,7 @@ export class Api {
       credentials: "include",
       method: "DELETE",
       headers: this._headers,
-    })
-      .then((res) => this._getResponseData(res))
-      .then((data) => console.log(data));
+    }).then((res) => this._getResponseData(res));
   }
 
   _getResponseData(res) {
