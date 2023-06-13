@@ -8,6 +8,8 @@
     padding: 0;
     margin-bottom: 16px;
     margin-top: 69px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
 }
 
 @media screen and (min-width: 320px) and (max-width: 767px) {
@@ -15,4 +17,9 @@
         margin-bottom: 14px;
         margin-top: 157px;
     }
+}
+
+.sign-up__button:disabled {
+    cursor: default;
+    background-color: lightgrey;
 }

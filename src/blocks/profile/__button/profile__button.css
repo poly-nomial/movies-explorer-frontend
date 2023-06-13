@@ -8,4 +8,10 @@
     font-weight: normal;
     font-size: 13px;
     line-height: calc(15.73 / 13);
+    transition: color 0.3s ease-in-out;
+}
+
+.profile__button:disabled {
+    cursor: default;
+    color: grey;
 }
