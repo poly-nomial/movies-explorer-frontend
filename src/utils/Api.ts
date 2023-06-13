@@ -1,5 +1,9 @@
+import { ApiOptions } from "../types/types";
+
 export class Api {
-  constructor(options) {
+  private _baseUrl : string;
+  private _headers : HeadersInit | undefined;
+  constructor(options : ApiOptions) {
     this._baseUrl = options.baseUrl;
     this._headers = options.headers;
   }
@@ -54,7 +58,7 @@ export class Api {
     }).then((res) => this._getResponseData(res));
   }
 
-  _getResponseData(res) {
+  _getResponseData(res : Response) {
     if (!res.ok) {
       return Promise.reject(`Ошибка: ${res.status}`);
     } else {

@@ -18,6 +18,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import movieApi from "./utils/MovieApi";
 import { CurrentUserContext } from "./contexts/CurrentUserContext";
 import useLocalStorage from "./hooks/useLocalStorage";
+import {LoggedInState} from './types/types';
 
 function App() {
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ function App() {
 
   const [isNavMenuOpen, setIsNavMenuOpen] = React.useState(false);
   const [currentUser, setCurrentUser] = React.useState({});
-  const [loggedIn, setLoggedIn] = React.useState(null);
+  const [loggedIn, setLoggedIn] = React.useState<LoggedInState>(null);
   const [savedMoviesList, setSavedMoviesList] = React.useState([]);
   const [filteredMovieList, setFilteredMovieList] = useLocalStorage(
     "searchedMovies",
