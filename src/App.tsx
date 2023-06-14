@@ -67,7 +67,7 @@ function App() {
           navigate("/sign-in");
         }
       })
-      .catch((err) => {
+      .catch(() => {
         setLoggedIn(false);
         navigate("/");
       });

@@ -1,4 +1,4 @@
-import { ApiOptions } from "../types/types";
+import { ApiOptions, UserDTO, DataWrapper, MovieDTO, SavedMovieDTO } from "../types/types";
 
 export class Api {
   private _baseUrl : string;
@@ -13,11 +13,11 @@ export class Api {
       credentials: "include",
       headers: this._headers,
     })
-      .then((res) => this._getResponseData(res))
+      .then((res) => this._getResponseData<DataWrapper<UserDTO>>(res))
       .then(({ data }) => data);
   }
 
-  updateProfile(newName, newEmail) {
+  updateProfile(newName : string, newEmail : string) {
     return fetch(`${this._baseUrl}/users/me`, {
       credentials: "include",
       method: "PATCH",
@@ -27,17 +27,17 @@ export class Api {
         name: newName,
       }),
     })
-      .then((res) => this._getResponseData(res))
+      .then((res) => this._getResponseData<DataWrapper<UserDTO>>(res))
       .then(({ data }) => data);
   }
 
-  saveMovie(movie) {
+  saveMovie(movie : MovieDTO) {
     return fetch(`${this._baseUrl}/movies`, {
       credentials: "include",
       method: "POST",
       headers: this._headers,
       body: JSON.stringify(movie),
-    }).then((res) => this._getResponseData(res));
+    }).then((res) => this._getResponseData<DataWrapper<MovieDTO>>(res));
   }
 
   getSavedMovies() {
@@ -46,11 +46,11 @@ export class Api {
       method: "GET",
       headers: this._headers,
     })
-      .then((res) => this._getResponseData(res))
+      .then((res) => this._getResponseData<DataWrapper<MovieDTO[]>>(res))
       .then(({ data }) => data);
   }
 
-  deleteSavedMovie(movie) {
+  deleteSavedMovie(movie : SavedMovieDTO) {
     return fetch(`${this._baseUrl}/movies/${movie._id}`, {
       credentials: "include",
       method: "DELETE",
@@ -58,11 +58,11 @@ export class Api {
     }).then((res) => this._getResponseData(res));
   }
 
-  _getResponseData(res : Response) {
+  _getResponseData<T>(res : Response) : T | Promise<T>{
     if (!res.ok) {
-      return Promise.reject(`Ошибка: ${res.status}`);
+      return Promise.reject<T>(`Ошибка: ${res.status}`);
     } else {
-      return res.json();
+      return res.json() as T;
     }
   }
 }
